@@ -66,7 +66,14 @@ class Migrator {
               dtTillMax
             )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-          `;
+            ON CONFLICT (warehouse_name) DO UPDATE SET
+              box_delivery_and_storage_expr = EXCLUDED.box_delivery_and_storage_expr,
+              box_delivery_base = EXCLUDED.box_delivery_base,
+              box_delivery_liter = EXCLUDED.box_delivery_liter,
+              box_storage_base = EXCLUDED.box_storage_base,
+              box_storage_liter = EXCLUDED.box_storage_liter,
+              dtNextBox = EXCLUDED.dtNextBox,
+              dtTillMax = EXCLUDED.dtTillMax;`;
 
             try {
                 await this.client.query(query, [
