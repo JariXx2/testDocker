@@ -1,24 +1,22 @@
 const express = require("express");
 const app = express();
 const port = 3000;
-const {Client} = require("pg");
+const Migrator = require('./migrator')
 
-const client = new Client({
-    user: process.env.DB_USER || "postgres",
-    password: process.env.DB_PASSWORD || "postgres",
-    host: process.env.DB_HOST || "localhost",
-    port: process.env.DB_PORT || 5432,
-    database: process.env.DB_NAME || "postgres",
-});
+const migrator = new Migrator();
 
-app.get("/", (req, res) => {
-    client
-    .connect()
-    .then(() => console.log("Connected to PostgreSQL"))
-    .catch((err) => console.error("Connection error", err.stack));
-    res.send("Hello World!");
-});
+async function startApp() {
+    try{
+        await migrator.connect();
+        await migrator.runMigrations();
 
-app.listen(port, () => {
-    console.log(`App listen at http://localhost:${port}`);
-});
+        const warehouseData = await migrator.getWarehouseData();
+        if(warehouseData){
+            await migrator.saveWarehouseData(warehouseData)
+        }
+    }catch (error){
+        console.error("Ошибка запуска приложения: ",error)
+    }
+}
+
+startApp();
