@@ -1,0 +1,11 @@
+*.log
+*.log.*
+npm-debug.log*
+
+node_modules/
+
+.vscode/
+*.swp
+*.swo
+
+.env
