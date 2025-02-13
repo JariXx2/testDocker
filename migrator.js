@@ -36,6 +36,16 @@ class Migrator {
         }
     }
 
+    async getDataFromDB() {
+        try {
+            const result = await this.client.query('SELECT * FROM warehouse_box_rates'); 
+            return result.rows;
+        } catch (error) {
+            console.error("Ошибка при получении данных из базы:", error);
+            return null;
+        }
+    }
+
     async saveWarehouseData(data) {
         if (!data || !data.response || !data.response.data || !data.response.data.warehouseList) {
             console.log("Нет данных для сохранения.");

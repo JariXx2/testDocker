@@ -9,3 +9,5 @@ node_modules/
 *.swo
 
 .env
+
+credentials.json
