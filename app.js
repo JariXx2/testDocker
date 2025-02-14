@@ -8,7 +8,7 @@ const GoogleSheetsService = require("./googleSheets");
 const migrator = new Migrator();
 const googleSheetsService = new GoogleSheetsService("./credentials.json");
 
-const spreadsheetIds = ["1S7dNESwdHj03t9rUFHhSA0uZlOLZFY8vC5j6szbwn9k"];
+const spreadsheetIds = ["1S7dNESwdHj03t9rUFHhSA0uZlOLZFY8vC5j6szbwn9k","1Ph3MtTV1k_Mi2kplMnGziPbsa3G-6-uygeHzTGrUZck"];
 
 async function startApp() {
     try {
